@@ -2,8 +2,8 @@
 (define (var? n) (number? n))
 (define (ext-s x v s) `((,x . ,v) . ,s))
 (define (walk u s)
-  (let ((pr (assv u s)))
-    (and pr (walk (cdr pr) s) u)))
+  (let ((pr (and (var? u) (assv u s))))
+    (if pr (walk (cdr pr) s) u)))
 (define (unify u v s)
   (let ((u (walk u s)) (v (walk v s)))
     (cond
@@ -34,4 +34,4 @@
     ((procedure? $) (lambda () ($-append-map g ($))))
     ((null? $) `())
     (else ($-append (g (car $)) ($-append-map g (cdr $))))))
-(define (call/empty-state g) (g `(() . 0)))
+(define (call/empty-state g) (g '(() . 0)))
