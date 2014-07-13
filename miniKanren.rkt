@@ -37,11 +37,7 @@
 (define (reify-name n)
   (string->symbol
     (string-append "_." (number->string n))))
-(define (mK-reify ls) (map reify-var0 ls))
 (define (pull $) (if (procedure? $) (pull ($)) $))
-(define (take* $)
-  (let (($ (pull $)))
-    (if (null? $) '() (cons (car $) (take* (cdr $))))))
 (define (take n)
   (lambda ($)
     (cond
@@ -53,14 +49,9 @@
            (else
             (cons (car $)
              ((take (- n 1)) (cdr $))))))))))
-(define-syntax query
-  (syntax-rules ()
-    ((_ takef g) (mK-reify (takef (call/empty-state g))))))
-(define-syntax run*
-  (syntax-rules ()
-    ((_ (q) g0 g ...) 
-     (query take* (fresh (q) g0 g ...)))))
 (define-syntax run
   (syntax-rules ()
     ((_ n (q) g0 g ...)
-     (query (take n) (fresh (q) g0 g ...)))))
+     (map reify-var0
+          ((take n)
+           (call/empty-state (fresh (q) g0 g ...)))))))

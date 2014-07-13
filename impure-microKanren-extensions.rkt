@@ -19,7 +19,7 @@
         (else (list (car $)))))))
 (define (call/project x f)
   (lambda (s/c)
-    ((f (walk* x (car s/c)))  s/c)))
+    ((f (walk* x (car s/c))) s/c)))
 (define (walk* v s)
   (let ((v (walk v s)))
     (cond
