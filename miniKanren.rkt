@@ -15,7 +15,8 @@
     ((_ g0 g ...) (disj g0 (disj+ g ...)))))
 (define-syntax fresh
   (syntax-rules ()
-    ((_ () g0 g ...) (conj+ g0 g ...))
+    ((_ () g0 g ...)
+     (inverse-eta-delay (conj+ g0 g ...)))
     ((_ (x0 x ...) g0 g ...)
      (call/fresh (lambda (x0) (fresh (x ...) g0 g ...))))))
 (define-syntax conde
