@@ -23,7 +23,7 @@
 (define (call/fresh f)
   (lambda (s/c)
     (let ((c (cdr s/c)))
-      ((f c) (cons (car s/c) (+ 1 c))))))
+      ((f (var c)) (cons (car s/c) (+ 1 c))))))
 (define (disj g1 g2) (lambda (s/c) ($-append (g1 s/c) (g2 s/c))))
 (define (conj g1 g2) (lambda (s/c) ($-append-map g2 (g1 s/c))))
 (define ($-append $1 $2)
