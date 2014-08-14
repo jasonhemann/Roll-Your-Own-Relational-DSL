@@ -36,4 +36,5 @@
     ((procedure? $) (lambda () ($-append-map g ($))))
     ((null? $) `())
     (else ($-append (g (car $)) ($-append-map g (cdr $))))))
-(define (call/empty-state g) (g  (cons '() 0)))
+(define (call/empty-state g) (g (cons '() 0)))
+x
